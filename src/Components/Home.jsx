@@ -1,6 +1,7 @@
 import { Link, useLoaderData } from "react-router-dom";
 import Banner from "./Banner";
 import ServiceCard from "./ServiceCard";
+import FeedBack from "./FeedBack";
 
 const Home = () => {
   const services = useLoaderData();
@@ -20,6 +21,8 @@ const Home = () => {
         <Link to="/allTreatments" className="btn btn-primary">
           View More
         </Link>
+
+        <FeedBack feedBackData={feedBackData}></FeedBack>
       </div>
     </div>
   );
