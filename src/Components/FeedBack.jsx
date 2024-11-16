@@ -1,3 +1,5 @@
+import { useContext } from "react";
+
 const FeedBack = ({ feedBackData }) => {
   // const { review, userImg, name, reviewId } = feedBackData; ekhane kaj korbe na
   return (
@@ -49,7 +51,7 @@ const FeedBack = ({ feedBackData }) => {
                     className="mask mask-star-2 bg-orange-400"
                   />
                 </div>
-                <button className="btn btn-primary">Buy Now</button>
+                <button className="btn btn-primary">Feed Back</button>
               </div>
             </div>
           </div>
