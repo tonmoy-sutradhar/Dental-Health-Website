@@ -1,20 +1,41 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
-  const { handleRegister } = useContext(AuthContext);
+  const [error, setError] = useState("");
+  const { handleRegister, manageProfile } = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError("");
     const form = new FormData(e.target);
     const name = form.get("name");
     const photo = form.get("photo");
     const email = form.get("email");
     const password = form.get("password");
-    // if (password.length < 8) {
-    //   setErr({ ...err, password: "Password must be more than 8 char." });
-    //   return;
+    // const Cpassword = form.get("Cpassword");
+    // if (password !== Cpassword) {
+    //   setError("Password didn't match");
     // }
-    handleRegister(email, password);
+    if (
+      password.length < 8 ||
+      !/[A-Z]/.test(password) ||
+      !/[a-z]/.test(password)
+    ) {
+      setError({
+        ...error,
+        password:
+          password.length < 8
+            ? "Password must be more than 8 characters."
+            : !/[A-Z]/.test(password)
+            ? "Password must contain at least one uppercase letter."
+            : "Password must contain at least one lowercase letter.",
+      });
+      return;
+    }
+
+    handleRegister(email, password).then((res) => {
+      manageProfile(name, photo);
+    });
     // console.log(name, email, photo, password);
   };
   return (
@@ -72,17 +93,24 @@ const Register = () => {
               className="input rounded-none bg-[#F3F3F3]"
               required
             />
-            {/* {err.password && (
+            {error.password && (
               <label className="label text-sm text-red-600">
-                {err.password}
+                {error.password}
               </label>
-            )} */}
-            {/* <label className="label">
-              <a href="#" className="label-text-alt link link-hover">
-                Forgot password?
-              </a>
-            </label> */}
+            )}
           </div>
+          {/* <div className="form-control">
+            <label className="label">
+              <span className="label-text font-bold">Confirm Password</span>
+            </label>
+            <input
+              type="password"
+              name="Cpassword"
+              placeholder="Enter your password"
+              className="input rounded-none bg-[#F3F3F3]"
+              required
+            />
+          </div> */}
           <div className="form-control ">
             <label className="cursor-pointer label justify-start">
               <input type="checkbox" className="checkbox checkbox-success" />
