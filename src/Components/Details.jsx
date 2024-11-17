@@ -1,5 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import Modal from "./Modal";
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Details = () => {
   const singleData = useLoaderData();
